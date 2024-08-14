@@ -77,6 +77,19 @@ table td{
     font-weight: bold;
 }
 
+.buttonMore{
+    background-color: #30beff;
+    padding: 0px 24px;
+    color: #fff;
+    margin: 14px 0px;
+    border-radius: 8px;
+    height: 30px;
+}
+
+
+
+
+
 /*responsivo table*/
 
 @media screen and (max-width:600px) {
