@@ -86,13 +86,32 @@ table td{
     height: 30px;
 }
 
+.name{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 
+.logo{
+    width: 20px;
+    height: 20px;
+    transition: all 1s;
+}
+
+.logo:hover{
+    transform: scale(1.5);
+    z-index: 99;
+}
 
 
 
 /*responsivo table*/
 
 @media screen and (max-width:600px) {
+    .name img{
+        margin-left: 14px;
+    }
+
      table{
         border: 0px;
      }
