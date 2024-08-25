@@ -1,10 +1,87 @@
-import React from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import styles from './exchange.module.css';
 import { BsSearch } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 
+interface Exchange {
+    exchangeId: string;
+    name: string;
+    exchangeUrl: string;
+}
+
 export function Exchange(){
+
+    const [exchange, setExchange] = useState<Exchange[]>([]);
+    const [input, setInput] = useState("");
+    const [offset, setOffset]=useState(0);
+
+    useEffect(() =>{
+
+        getData()
+     
+    }, [offset])
+
+  
+    async function getData() {
+        try {
+            const response = await fetch(`https://api.coincap.io/v2/exchanges?limit=5&offset=${offset}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const exchangeData: Exchange[] = data.data;
+            console.log(exchangeData);
+
+            const formatedResult = exchangeData.map((item) =>{
+                const formated ={
+                    ...item,
+                }
+
+                return formated
+            })
+
+
+            const listExchange=[...exchange, ...formatedResult];
+            setExchange(listExchange);
+
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
+
+    function handleGetMore(){
+        if(offset === 0){
+            setOffset(10)
+            return;
+        }
+
+        setOffset(offset + 10)
+
+        
+            
+        
+    }
+
+
+    function handleSubmit(e:FormEvent){
+
+        e.preventDefault();
+
+        if(input === "") return;
+
+        const filtered = exchange.filter((item) =>
+            item.name.toLowerCase().includes(input.toLowerCase())
+        );
+
+        setExchange(filtered);
+        
+       
+
+        console.log(input);
+    }
+
+
 
     return(
 
@@ -24,12 +101,13 @@ export function Exchange(){
                 </h1>
 
 
-                <form className={styles.form} >
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <input 
                         type="text"
                         placeholder='Buscar... '
                         
-                       
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
                     
                     />
 
@@ -51,43 +129,36 @@ export function Exchange(){
                     </tr>
                 </thead>
                 <tbody id='tbody'>
-                   
-                    <tr className={styles.tr}>
- 
-                         <td className={styles.tdLabel} >
-                            Gate
-                            
-                         </td>
- 
-                         <td className={styles.tdLabel} >
-                             <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
-                                Acessar
-                            </a>
-                         </td>
- 
-                      </tr>
 
-                      <tr className={styles.tr}>
- 
-                            <td className={styles.tdLabel} >
-                                Gate
+                    {exchange.length > 0 && exchange.map((item)=>(  
+                        <tr className={styles.tr} key={item.exchangeId}>
+                             <td className={styles.tdLabel} >
+                                {item.name}
                                 
-                            </td>
-
+                             </td>
+ 
                             <td className={styles.tdLabel} >
-                                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                                <a href={`${item.exchangeUrl}`} target="_blank" rel="noopener noreferrer">
                                     Acessar
                                 </a>
-                                    
                             </td>
 
-                       </tr>
+                        </tr>
+
+
+                    ))}
+                   
+                   
 
 
 
         
                 </tbody>
             </table>
+
+            <button className={styles.buttonMore} onClick={handleGetMore}>
+                Carregar mais
+            </button>
 
         </main>
 

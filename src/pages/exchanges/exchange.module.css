@@ -54,6 +54,19 @@
 }   
 
 
+.buttonMore{
+    background-color: #1480FC;
+    height: 35px;
+    padding: 0px 24px;
+    color: #fff;
+    margin: 14px 0px;
+    border-radius: 8px;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    
+}
+
 table{
     border-collapse: separate;
     border-spacing: 0px 14px;
