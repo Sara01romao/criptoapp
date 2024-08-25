@@ -1,7 +1,8 @@
 
+import React from 'react';
 import styles from './header.module.css';
 import logimg from '../../assets/logo.svg'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export function Header() {
 
@@ -11,6 +12,23 @@ export function Header() {
         <Link to="/">
             <img src={logimg} alt="Logo Cripto App" />
         </Link>
+
+      
+
+        <nav className={styles.nav}>
+            <NavLink 
+                to="/" 
+                className={({ isActive }) => isActive ? styles.active : ''}
+                >
+                 Criptos
+            </NavLink>
+            <NavLink 
+                    to="/exchanges"
+                    className={({ isActive }) => isActive ? styles.active : ''}
+                >
+                    Exchanges
+            </NavLink>
+        </nav>
         
         
     </header>

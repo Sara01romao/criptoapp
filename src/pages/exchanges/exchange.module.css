@@ -1,0 +1,107 @@
+
+.container{
+    margin: 60px 14px;
+}
+
+.titleContainer{
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.tituloPage{
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.form{
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.form input{
+    max-width: 350px;
+    min-width: 300px;
+    width: 100%;
+    height: 44px;
+    border: 0;
+    padding: 0px 8px;
+    border-radius: 4px;
+    outline: none;
+    padding: 0px 12px;
+    font-size: 16px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background: none;
+   
+}
+
+
+
+
+.form button{
+    background: transparent;
+    padding: 0px 10px;
+
+}   
+
+
+table{
+    border-collapse: separate;
+    border-spacing: 0px 14px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption{
+    font-size: 16px;
+    margin: 0.5rem 0 .75em;
+}
+
+thead th{
+    color: #fff;
+    text-align: justify;
+}
+
+
+thead th:nth-child(2){
+   
+    text-align: center;
+}
+
+.tr{
+ background-color: #1d1c20;
+}
+
+.tdLabel:nth-child(1){
+    font-weight: bold;
+    font-size: 18px;
+    color: #fff;
+    text-align: justify;
+}
+
+.tdLabel:nth-child(2) a{
+    color: #1480FC;
+}
+
+
+@media screen and (max-width:581px) {
+
+    .form{
+        margin: 0 auto;
+    }
+    .form input{
+        min-width:initial;
+    }
+    
+}
