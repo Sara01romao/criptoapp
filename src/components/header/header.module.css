@@ -7,7 +7,7 @@
     max-width: 1080px;
     flex-direction: column;
     gap: 50px;
-    padding-top: 30px;
+    margin-top: 50px;
 }
 
 .nav{
@@ -24,7 +24,7 @@
     flex-direction: column;
     width: 100px;
     text-align: center;
-    
+    font-size: 18px; 
 }
 
 .nav a:hover{
