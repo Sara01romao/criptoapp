@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import styles from './exchange.module.css';
 import { BsSearch } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { IoFastFood } from 'react-icons/io5';
 
 
 interface Exchange {
@@ -13,25 +13,42 @@ interface Exchange {
 export function Exchange(){
 
     const [exchange, setExchange] = useState<Exchange[]>([]);
-    const [input, setInput] = useState("");
+    const [exchangeList, setExchangeList] = useState<Exchange[]>([]);
+    const [input, setInput] = useState<string>("");
     const [offset, setOffset]=useState(0);
+    const [noResults, setNoResults] = useState<boolean>(false);
+  
 
     useEffect(() =>{
 
-        getData()
+        if (input === "") {
+            getData();
+        }else {
+            getData(input);
+        }
+
+        
      
-    }, [offset])
+    }, [offset, input])
 
   
-    async function getData() {
+    async function getData(query: string = "") {
         try {
-            const response = await fetch(`https://api.coincap.io/v2/exchanges?limit=5&offset=${offset}`);
+
+            let url = `https://api.coincap.io/v2/exchanges`;
+            if (!query) {
+               
+                url += `?limit=5&offset=${offset}`;
+            }
+
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
             const exchangeData: Exchange[] = data.data;
             console.log(exchangeData);
+
 
             const formatedResult = exchangeData.map((item) =>{
                 const formated ={
@@ -41,9 +58,31 @@ export function Exchange(){
                 return formated
             })
 
+            setExchange(formatedResult)
+            
 
-            const listExchange=[...exchange, ...formatedResult];
-            setExchange(listExchange);
+            if (!query) {
+                // Quando não há uma query, carrega mais itens ou inicia a lista
+                if(offset !== 0){
+                    const listExchange = [...exchange, ...formatedResult]; 
+
+                    setExchangeList(listExchange); 
+                    setExchange(listExchange); 
+                    setNoResults(false); 
+                }else{
+                    setExchange(exchangeData)
+                }
+                
+              
+            } else {
+                // Quando há uma query, filtra a lista completa
+                const filtered = formatedResult.filter((item) =>
+                    item.name.toLowerCase().includes(query.toLowerCase())
+                );
+                setExchange(filtered);
+                setNoResults(filtered.length === 0); 
+            }
+           
 
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
@@ -56,30 +95,26 @@ export function Exchange(){
             return;
         }
 
-        setOffset(offset + 10)
-
-        
-            
+        setOffset(offset + 10);
         
     }
+    
 
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        setInput(inputValue);
 
-    function handleSubmit(e:FormEvent){
+        if (inputValue === "") {
+            setOffset(0);
+            setExchange(exchangeList); 
+            return;
+        }else{
+          
+            getData(inputValue)
+        }
 
-        e.preventDefault();
-
-        if(input === "") return;
-
-        const filtered = exchange.filter((item) =>
-            item.name.toLowerCase().includes(input.toLowerCase())
-        );
-
-        setExchange(filtered);
-        
-       
-
-        console.log(input);
-    }
+    };
+   
 
 
 
@@ -101,13 +136,13 @@ export function Exchange(){
                 </h1>
 
 
-                <form className={styles.form} onSubmit={handleSubmit}>
+                <form className={styles.form} >
                     <input 
                         type="text"
                         placeholder='Buscar... '
                         
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={handleInputChange}
                     
                     />
 
@@ -120,7 +155,7 @@ export function Exchange(){
 
 
 
-
+        
           <table className={styles.tableExchange}>
                 <thead>
                     <tr>
@@ -159,6 +194,9 @@ export function Exchange(){
             <button className={styles.buttonMore} onClick={handleGetMore}>
                 Carregar mais
             </button>
+           
+
+        
 
         </main>
 
