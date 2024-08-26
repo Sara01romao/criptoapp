@@ -1,10 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from './detail.module.css';
 
 //importa tipagem da moeda na home
 import {CoinProps} from '../home';
+import { BsArrowLeftCircleFill } from 'react-icons/bs';
 
 interface ResponseData{
    data:CoinProps;
@@ -87,18 +88,23 @@ export function Detail(){
    return(
      
       <div className={styles.container}>
-         <h1 className={styles.center}>{coin?.name}</h1>
-         <h1 className={styles.center}>{coin?.symbol}</h1>
-
-
+          <Link to="/" className={styles.linkBack}><BsArrowLeftCircleFill size={30} color='#1480FC' />  Voltar</Link>
          <section className={styles.content}>
-            <img 
-               src={`https://assets.coincap.io/assets/icons/${coin?.symbol.toLowerCase()}@2x.png`}
-               alt="Cripto Logo" 
-               className={styles.logo}
-            />
 
-            <h1>{coin?.name} | {coin?.symbol}</h1>
+           
+            <div className={styles.headerDetail}>
+               <img 
+                  src={`https://assets.coincap.io/assets/icons/${coin?.symbol.toLowerCase()}@2x.png`}
+                  alt="Cripto Logo" 
+                  className={styles.logo}
+               />
+              
+              <h1>{coin?.name} | {coin?.symbol}</h1>
+
+            </div>
+           
+
+            
             <p><strong>Preço: </strong>{coin?.formatedPrice}</p>
 
             <a href="">

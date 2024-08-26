@@ -7,6 +7,8 @@
     align-self: center;
     justify-content: space-between;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap:20px;
 }
 
 .tituloPage{
@@ -45,6 +47,18 @@
     padding: 0px 10px;
 
 }   
+
+
+@media screen and (max-width:581px) {
+
+    .form{
+        margin: 0 auto;
+    }
+    .form input{
+        min-width:initial;
+    }
+    
+}
 
 
 table{
