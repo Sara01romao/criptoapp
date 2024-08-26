@@ -112,8 +112,14 @@ table td{
     border-radius: 8px;
     font-size: 16px;
     display: block;
-    margin: 0 auto;
-    
+    margin: 0 auto; 
+    transition: 0.3s ease;
+}
+
+.buttonMore:hover{
+    background-color: #0868d6;
+    transition: 0.3s ease;
+
 }
 
 .name{

@@ -2,6 +2,8 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import styles from './exchange.module.css';
 import { BsSearch } from 'react-icons/bs';
 import { IoFastFood } from 'react-icons/io5';
+import { DiVim } from 'react-icons/di';
+import { LuSearchX } from 'react-icons/lu';
 
 
 interface Exchange {
@@ -146,15 +148,16 @@ export function Exchange(){
                     
                     />
 
-                    <button type='submit'>
+                    <div className={styles.iconSearch}>
                         <BsSearch size={20} color='grey' />
-                    </button>
+                    </div>
                 </form>
 
           </div>
 
 
-
+         
+         {noResults ? <div className={styles.resultadoTxt}><LuSearchX  size={100} color='#1480FC' /><h2>Nenhum resultado foi encontrado.</h2></div> : <div>
         
           <table className={styles.tableExchange}>
                 <thead>
@@ -196,8 +199,8 @@ export function Exchange(){
             </button>
            
 
-        
-
+             </div>
+            }
         </main>
 
         

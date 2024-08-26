@@ -45,14 +45,11 @@
 }
 
 
-
-
-.form button{
+.iconSearch{
     background: transparent;
     padding: 0px 10px;
 
 }   
-
 
 .buttonMore{
     background-color: #1480FC;
@@ -64,7 +61,14 @@
     font-size: 16px;
     display: block;
     margin: 0 auto;
+    transition: 0.3s ease;
     
+}
+
+.buttonMore:hover{
+    background-color: #0868d6;
+    transition: 0.3s ease;
+
 }
 
 table{
@@ -107,6 +111,11 @@ thead th:nth-child(2){
     color: #1480FC;
 }
 
+.tdLabel:nth-child(2) a:hover{
+    color: #8cbffa;
+    transition: 0.3s ease;
+}
+
 
 @media screen and (max-width:581px) {
 
@@ -117,4 +126,17 @@ thead th:nth-child(2){
         min-width:initial;
     }
     
+}
+
+
+.resultadoTxt{
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
 }
