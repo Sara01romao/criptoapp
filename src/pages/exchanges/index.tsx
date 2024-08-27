@@ -1,8 +1,6 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './exchange.module.css';
 import { BsSearch } from 'react-icons/bs';
-import { IoFastFood } from 'react-icons/io5';
-import { DiVim } from 'react-icons/di';
 import { LuSearchX } from 'react-icons/lu';
 
 
@@ -15,7 +13,8 @@ interface Exchange {
 export function Exchange(){
 
     const [exchange, setExchange] = useState<Exchange[]>([]);
-    const [exchangeList, setExchangeList] = useState<Exchange[]>([]);
+    const [dataExchange, setDataExchange] = useState<Exchange[]>([]);
+
     const [input, setInput] = useState<string>("");
     const [offset, setOffset]=useState(0);
     const [noResults, setNoResults] = useState<boolean>(false);
@@ -37,54 +36,59 @@ export function Exchange(){
     async function getData(query: string = "") {
         try {
 
+            console.log(query, "query")
+
             let url = `https://api.coincap.io/v2/exchanges`;
-            if (!query) {
-               
+            if (query) {
+                url = `https://api.coincap.io/v2/exchanges`;
+                
+            }else{
+                
                 url += `?limit=5&offset=${offset}`;
             }
+
+          
 
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
+            
             const data = await response.json();
             const exchangeData: Exchange[] = data.data;
-            console.log(exchangeData);
 
+            setExchange(exchangeData)
+            setDataExchange(exchangeData)
 
-            const formatedResult = exchangeData.map((item) =>{
-                const formated ={
-                    ...item,
+            if(query === ""){
+                if (offset === 0) {
+                    
+                    setExchange(exchangeData);
+                    setDataExchange(exchangeData);
+                } else {
+                    //  incrementar a lista
+                    const updatedList = [...exchange, ...exchangeData];
+                    setExchange(updatedList);
+                    setDataExchange(updatedList);
                 }
+                return
+            }
 
-                return formated
-            })
+             if(query !== ""){
 
-            setExchange(formatedResult)
-            
-
-            if (!query) {
-                // Quando não há uma query, carrega mais itens ou inicia a lista
-                if(offset !== 0){
-                    const listExchange = [...exchange, ...formatedResult]; 
-
-                    setExchangeList(listExchange); 
-                    setExchange(listExchange); 
-                    setNoResults(false); 
-                }else{
-                    setExchange(exchangeData)
-                }
-                
-              
-            } else {
-                // Quando há uma query, filtra a lista completa
-                const filtered = formatedResult.filter((item) =>
+                const filterExchange = exchangeData.filter((item) =>
                     item.name.toLowerCase().includes(query.toLowerCase())
                 );
-                setExchange(filtered);
-                setNoResults(filtered.length === 0); 
+    
+                setNoResults(filterExchange.length === 0);
+
+                setExchange(filterExchange)
+
+                
             }
-           
+            
+            
 
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
@@ -93,27 +97,32 @@ export function Exchange(){
 
     function handleGetMore(){
         if(offset === 0){
-            setOffset(10)
+            setOffset(5)
             return;
         }
 
-        setOffset(offset + 10);
+        setOffset(offset + 5);
         
     }
     
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-        setInput(inputValue);
 
-        if (inputValue === "") {
-            setOffset(0);
-            setExchange(exchangeList); 
-            return;
+        if(inputValue === " "){
+            setOffset(0)
+            getData();
+           
         }else{
-          
+            setInput(inputValue)
+        
+            console.log(inputValue)
+
             getData(inputValue)
         }
+
+        
+        
 
     };
    
