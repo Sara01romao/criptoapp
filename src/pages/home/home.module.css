@@ -45,7 +45,17 @@
 .form button{
     background: transparent;
     padding: 0px 10px;
+    background: #1480FC;
+    height: 44px;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    
 
+} 
+
+.form button:hover{
+    background-color: #0868d6;
+    transition: 0.3s ease;
 }   
 
 
@@ -94,12 +104,19 @@ th:last-child{
     border-radius: 0px 8px 8px 0px;
 }
 
+
 table th,
 table td{
     padding: 14px;
     text-align: center;
 
 }
+
+table thead th{
+    text-align: center;
+
+}
+
 
 .tdLabel{
     font-weight: bold;

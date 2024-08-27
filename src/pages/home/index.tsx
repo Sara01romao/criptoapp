@@ -98,8 +98,7 @@ export function Home(){
             setOffset(10)
             return;
         }
-        
-       
+          
         setOffset(offset + 10)
             
         
@@ -128,7 +127,7 @@ export function Home(){
                     />
 
                     <button type='submit'>
-                        <BsSearch size={20} color='grey' />
+                        <BsSearch size={20} color='#fff' />
                     </button>
                 </form>
 
@@ -138,8 +137,8 @@ export function Home(){
                 <thead>
                     <tr>
                         <th scope="col">Moeda</th>
-                        <th scope="col">Valor Mecardo</th>
                         <th scope="col">Preço</th>
+                        <th scope="col">Valor Mecardo</th>
                         <th scope="col">Volume</th>
                         <th scope="col">Mudança</th>
                     </tr>
@@ -158,14 +157,14 @@ export function Home(){
                             </div>
                             
                          </td>
- 
-                         <td className={styles.tdLabel} data-label="Valor Mercado">
-                            {item.formatedMarket}
+
+                         <td className={styles.tdLabel} data-label="Preço">
+                            {item.formatedPrice}
                             
                          </td>
  
-                         <td className={styles.tdLabel} data-label="Preço">
-                            {item.formatedPrice}
+                         <td className={styles.tdLabel} data-label="Valor Mercado">
+                            {item.formatedMarket}
                             
                          </td>
  
