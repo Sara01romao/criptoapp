@@ -85,12 +85,10 @@ export function Home(){
     function handleSubmit(e:FormEvent){
 
         e.preventDefault();
-
+        
         if(input === "") return;
 
-        navigate(`/detail/${input}`);
-
-        console.log(input);
+        navigate(`/detail/${input.toLowerCase()}`);
     }
 
     function handleGetMore(){
