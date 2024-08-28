@@ -29,7 +29,7 @@ Neste projeto, desenvolvido durante o curso de React com TypeScript, foi criada 
 Aprimorei o layout, adicionei uma nova página de Exchange que lista os nomes das corretoras com links para seus sites, e implementei um filtro de busca que 
 atualiza a lista das corretoras sem sair da página.
 
-<a href="https://sara01romao.github.io/sign-up-form-html-css-javascript/" target="_blank"><strong>Acessar »</strong></a>
+<a href="https://lista-criptos.netlify.app/" target="_blank"><strong>Acessar »</strong></a>
 
 <br>
 
