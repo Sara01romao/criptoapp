@@ -15,41 +15,24 @@ export function Exchange(){
     const [exchange, setExchange] = useState<Exchange[]>([]);
     const [dataExchange, setDataExchange] = useState<Exchange[]>([]);
 
+
     const [input, setInput] = useState<string>("");
     const [offset, setOffset]=useState(0);
     const [noResults, setNoResults] = useState<boolean>(false);
   
+    useEffect(()=>{
+        getData()
 
-    useEffect(() =>{
 
-        if (input === "") {
-            getData();
-        }else {
-            getData(input);
-        }
+    },[offset])
 
-        
-     
-    }, [offset, input])
 
   
-    async function getData(query: string = "") {
-        try {
 
-            console.log(query, "query")
 
-            let url = `https://api.coincap.io/v2/exchanges`;
-            if (query) {
-                url = `https://api.coincap.io/v2/exchanges`;
-                
-            }else{
-                
-                url += `?limit=5&offset=${offset}`;
-            }
+    async function getData(){
 
-          
-
-            const response = await fetch(url);
+        const response = await fetch(`https://api.coincap.io/v2/exchanges?limit=5&offset=${offset}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -60,40 +43,59 @@ export function Exchange(){
 
             setExchange(exchangeData)
             setDataExchange(exchangeData)
+            
 
-            if(query === ""){
-                if (offset === 0) {
-                    
-                    setExchange(exchangeData);
-                    setDataExchange(exchangeData);
-                } else {
-                    //  incrementar a lista
-                    const updatedList = [...exchange, ...exchangeData];
-                    setExchange(updatedList);
-                    setDataExchange(updatedList);
-                }
-                return
+            const updatedList = [...exchange, ...exchangeData];
+
+            setExchange(updatedList)
+
+            
+    }
+
+    useEffect(() => {
+        getDataInput(input);
+    }, [input]);
+    
+
+    async function getDataInput(query: string = "") {
+        try {
+          
+            const url = query === "" 
+                ? 'https://api.coincap.io/v2/exchanges?limit=5&offset=0' 
+                : 'https://api.coincap.io/v2/exchanges';
+    
+            // Fetch data from the API
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-
-             if(query !== ""){
-
-                const filterExchange = exchangeData.filter((item) =>
+    
+            const data = await response.json();
+            const exchangeData: Exchange[] = data.data;
+    
+            if (query === "") {
+               
+                setExchange(exchangeData);
+                setNoResults(false);
+            } else {
+               
+                const filterExchange = exchangeData.filter(item =>
                     item.name.toLowerCase().includes(query.toLowerCase())
                 );
     
-                setNoResults(filterExchange.length === 0);
-
-                setExchange(filterExchange)
-
-                
+                setNoResults(filterExchange.length === 0); 
+                setExchange(filterExchange);
             }
-            
-            
-
+    
+           
+    
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('Failed to fetch exchange data:', error);
         }
     }
+
+
+    
 
     function handleGetMore(){
         if(offset === 0){
@@ -106,26 +108,12 @@ export function Exchange(){
     }
     
 
-    const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-
-        if(inputValue === " "){
-            setOffset(0)
-            getData();
-           
-        }else{
-            setInput(inputValue)
-        
-            console.log(inputValue)
-
-            getData(inputValue)
-        }
-
-        
-        
-
+    
+        setInput(inputValue);
+    
     };
-   
 
 
 
