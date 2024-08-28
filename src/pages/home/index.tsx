@@ -72,7 +72,7 @@ export function Home(){
                 return formated
             })
 
-            console.log("data", formatedResult)
+          
 
             const listCoins=[...coins, ...formatedResult];
 
