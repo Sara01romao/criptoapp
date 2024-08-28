@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from './detail.module.css';

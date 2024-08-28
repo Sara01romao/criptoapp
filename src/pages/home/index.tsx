@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { BsSearch } from 'react-icons/bs';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
