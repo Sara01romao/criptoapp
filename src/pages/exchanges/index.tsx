@@ -13,9 +13,7 @@ interface Exchange {
 export function Exchange(){
 
     const [exchange, setExchange] = useState<Exchange[]>([]);
-    const [dataExchange, setDataExchange] = useState<Exchange[]>([]);
-
-
+   
     const [input, setInput] = useState<string>("");
     const [offset, setOffset]=useState(0);
     const [noResults, setNoResults] = useState<boolean>(false);
@@ -42,8 +40,7 @@ export function Exchange(){
             const exchangeData: Exchange[] = data.data;
 
             setExchange(exchangeData)
-            setDataExchange(exchangeData)
-            
+      
 
             const updatedList = [...exchange, ...exchangeData];
 
